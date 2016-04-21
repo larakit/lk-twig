@@ -1,9 +1,9 @@
 {
     "name": "larakit/lk-twig",
-    "description": "Модуль Twig для Larakit",
+    "description": "[Larakit] Шаблонизатор Twig",
     "keywords": [
         "laravel",
-        "quickform2",
+        "twig",
         "laravel 5",
         "larakit"
     ],	
