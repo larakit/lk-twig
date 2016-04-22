@@ -15,15 +15,16 @@
         }
     ],
     "require": {
-        "larakit/lk-spa": "dev-master",
-        "rcrowe/twigbridge": "0.9.2"
+        "larakit/lk-spa": "dev-master"
+        "twig/twig": "~1.24",
+        "rcrowe/twigbridge": "0.9.0",
     },
     "autoload": {
         "psr-4": {
             "Larakit\\": "src/"
         },
         "files": [
-			"src/init.php"
+             "src/init.php"
         ]
 
     }
