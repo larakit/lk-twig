@@ -70,7 +70,7 @@ Larakit\Twig::register_function('function_prefix', function($val, $prefix='prefi
 ~~~php
 Larakit\Twig::register_test('num', 'is_numeric');
 Larakit\Twig::register_test('age_alcohol', function($val){
-   return $prefix.'_'.$value;
+   return intval($val)>=17;
 });
 ~~~
 Использование в шаблонах Twig
