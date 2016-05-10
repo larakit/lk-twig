@@ -1,12 +1,12 @@
 <?php
 //регистрируем сервис-провайдер
-Larakit\SPA::register_provider('TwigBridge\ServiceProvider');
-Larakit\SPA::register_alias('Twig', 'TwigBridge\Facade\Twig');
+Larakit\Boot::register_provider('TwigBridge\ServiceProvider');
+Larakit\Boot::register_alias('Twig', 'TwigBridge\Facade\Twig');
 
 /*################################################################################
   middlewares
 ################################################################################*/
-\Larakit\SPA::register_middleware(\Larakit\Middleware\MiddlewareTwig::class);
+\Larakit\Boot::register_middleware(\Larakit\Middleware\MiddlewareTwig::class);
 
 
 //######################################################################
