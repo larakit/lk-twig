@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "larakit/lk-spa": "dev-master",
+        "larakit/lk-boot": "*",
         "twig/twig": "1.24.0",
         "rcrowe/twigbridge": "0.9.0"
     },
