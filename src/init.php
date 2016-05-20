@@ -8,7 +8,6 @@ Larakit\Boot::register_alias('Twig', 'TwigBridge\Facade\Twig');
 ################################################################################*/
 \Larakit\Boot::register_middleware(\Larakit\Middleware\MiddlewareTwig::class);
 
-
 //######################################################################
 // регистрируем фильтры
 //######################################################################
@@ -21,18 +20,23 @@ Larakit\Twig::register_filter('lower', function ($text) {
 });
 
 Larakit\Twig::register_filter('int', function ($text) {
-    return (int)$text;
+    return (int) $text;
 });
 
 //######################################################################
 // регистрируем функции
 //######################################################################
+\Larakit\Twig::register_function('env', function ($key, $default = null) {
+    return env($key, $default);
+});
+
 Larakit\Twig::register_function('phpcode', function ($text) {
     return highlight_string($text, true);
 });
 
 Larakit\Twig::register_function('laralang', function ($key, $replace = [], $locale = null, $fallback = true) {
     $val = Lang::get($key, $replace, $locale, $fallback);
+
     return ($val == $key) ? (App::environment('production') ? '' : $key) : $val;
 });
 
@@ -45,11 +49,11 @@ Larakit\Twig::register_function('arr_get', function ($arr, $key, $default = null
 });
 
 Larakit\Twig::register_function('widget', function ($class, $name = 'default') {
-    if (false === mb_strpos($class, '\\')) {
+    if(false === mb_strpos($class, '\\')) {
         $class = '\Larakit\Widget\\Widget' . studly_case($class);
     }
 
-    /** @var \Larakit\Base\Widget $class  */
+    /** @var \Larakit\Base\Widget $class */
     return $class::factory($name);
 });
 
@@ -67,8 +71,10 @@ Larakit\Twig::register_function('route_csrf', function () {
         $route          = array_shift($args);
         $args           = \Illuminate\Support\Arr::get($args, 0, []);
         $args['_token'] = csrf_token();
+
         return \URL::route($route, $args);
-    } catch (Exception $e) {
+    }
+    catch(Exception $e) {
         return $e->getMessage();
     }
 });
@@ -76,7 +82,6 @@ Larakit\Twig::register_function('route_csrf', function () {
 Larakit\Twig::register_function('number_format', function ($value, $decimals = 2, $dec_point = ',', $thousans_sep = '.') {
     return number_format($value, $decimals, $dec_point, $thousans_sep);
 });
-
 
 //######################################################################
 // регистрируем тесты
