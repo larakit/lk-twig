@@ -29,6 +29,12 @@ Larakit\Twig::register_filter('int', function ($text) {
 \Larakit\Twig::register_function('env', function ($key, $default = null) {
     return env($key, $default);
 });
+\Larakit\Twig::register_function('base64_decode', function ($data, $strict = null) {
+    return base64_decode($data, $strict);
+});
+\Larakit\Twig::register_function('base64_encode', function ($data) {
+    return base64_encode($data);
+});
 
 Larakit\Twig::register_function('phpcode', function ($text) {
     return highlight_string($text, true);
@@ -81,6 +87,10 @@ Larakit\Twig::register_function('route_csrf', function () {
 
 Larakit\Twig::register_function('number_format', function ($value, $decimals = 2, $dec_point = ',', $thousans_sep = '.') {
     return number_format($value, $decimals, $dec_point, $thousans_sep);
+});
+
+Larakit\Twig::register_function('date_diff_for_humans', function ($value) {
+    return \Carbon\Carbon::parse($value)->diffForHumans();
 });
 
 //######################################################################
