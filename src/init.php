@@ -3,6 +3,7 @@
 Larakit\Boot::register_provider('TwigBridge\ServiceProvider');
 Larakit\Boot::register_alias('Twig', 'TwigBridge\Facade\Twig');
 Larakit\Boot::register_command(\Larakit\Twig\CommandTwig::class);
+Larakit\Boot::register_command(\Larakit\Twig\CommandNsView::class);
 
 /*################################################################################
   middlewares
@@ -41,6 +42,10 @@ Larakit\Twig::register_function('phpcode', function ($text) {
     return highlight_string($text, true);
 });
 
+Larakit\Twig::register_function('route', function ($name, $parameters = [], $absolute = true) {
+    return URL::route($name, $parameters, $absolute);
+});
+
 Larakit\Twig::register_function('laralang', function ($key, $replace = [], $locale = null, $fallback = true) {
     $val = Lang::get($key, $replace, $locale, $fallback);
 
@@ -60,8 +65,15 @@ Larakit\Twig::register_function('widget', function ($class, $name = 'default') {
         $class = '\Larakit\Widget\\Widget' . studly_case($class);
     }
 
-    /** @var \Larakit\Base\Widget $class */
     return $class::factory($name);
+});
+\Larakit\Twig::register_function('request_is', function () {
+    $args = func_get_args();
+    $args = array_map(function ($item) {
+        return '*' . trim($item, '/') . '*';
+    }, $args);
+
+    return call_user_func_array(['Request', 'is'], $args);
 });
 
 Larakit\Twig::register_function('config_get', function ($key, $default = null) {
