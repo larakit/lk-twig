@@ -2,11 +2,12 @@
 //регистрируем сервис-провайдер
 Larakit\Boot::register_provider('TwigBridge\ServiceProvider');
 Larakit\Boot::register_alias('Twig', 'TwigBridge\Facade\Twig');
+Larakit\Boot::register_command(\Larakit\Twig\CommandTwig::class);
 
 /*################################################################################
   middlewares
 ################################################################################*/
-\Larakit\Boot::register_middleware(\Larakit\Middleware\MiddlewareTwig::class);
+\Larakit\Boot::register_middleware(\Larakit\Twig\MiddlewareTwig::class);
 
 //######################################################################
 // регистрируем фильтры

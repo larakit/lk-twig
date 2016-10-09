@@ -1,5 +1,5 @@
 <?php
-namespace Larakit\Middleware;
+namespace Larakit\Twig;
 
 Class MiddlewareTwig {
     public function handle($request, \Closure $next) {
