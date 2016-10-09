@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Larakit\\Twig\\": "src/Twig"
+            "Larakit\\": "src"
         },
         "files": [
              "src/init.php"
