@@ -16,7 +16,7 @@
     ],
     "require": {
         "larakit/lk-boot": "*",
-        "twig/twig": "1.24.0",
+        "twig/twig": ">1.30",
         "rcrowe/twigbridge": "0.9.*"
     },
     "autoload": {
