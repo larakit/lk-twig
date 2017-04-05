@@ -10,7 +10,7 @@ class CommandTwig extends \Illuminate\Console\Command {
      *
      * @var string
      */
-    protected $name = 'larakit:twig';
+    protected $name = 'larakit:show:twig';
 
     /**
      * The console command description.

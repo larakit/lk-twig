@@ -8,7 +8,7 @@ class CommandNsView extends \Illuminate\Console\Command {
      *
      * @var string
      */
-    protected $name = 'larakit:ns:view';
+    protected $name = 'larakit:show:ns-view';
 
     /**
      * The console command description.
