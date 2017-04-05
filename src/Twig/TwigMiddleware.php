@@ -1,7 +1,7 @@
 <?php
 namespace Larakit\Twig;
 
-Class MiddlewareTwig {
+Class TwigMiddleware {
     public function handle($request, \Closure $next) {
         \Larakit\Twig::apply();
         return $next($request);

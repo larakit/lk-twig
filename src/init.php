@@ -8,7 +8,7 @@ Larakit\Boot::register_command(\Larakit\Twig\CommandNsView::class);
 /*################################################################################
   middlewares
 ################################################################################*/
-\Larakit\Boot::register_middleware(\Larakit\Twig\MiddlewareTwig::class);
+\Larakit\Boot::register_middleware(\Larakit\Twig\TwigMiddleware::class);
 
 //######################################################################
 // регистрируем фильтры
