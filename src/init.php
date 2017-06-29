@@ -48,7 +48,7 @@ Larakit\Twig::register_function('route', function ($name, $parameters = [], $abs
 
 Larakit\Twig::register_function('laralang', function ($key, $replace = [], $locale = null, $fallback = true) {
     $val = Lang::get($key, $replace, $locale, $fallback);
-
+    
     return ($val == $key) ? (App::environment('production') ? '' : $key) : $val;
 });
 
@@ -64,7 +64,7 @@ Larakit\Twig::register_function('widget', function ($class, $name = 'default') {
     if(false === mb_strpos($class, '\\')) {
         $class = '\Larakit\Widget\\Widget' . studly_case($class);
     }
-
+    
     return $class::factory($name);
 });
 \Larakit\Twig::register_function('request_is', function () {
@@ -72,7 +72,7 @@ Larakit\Twig::register_function('widget', function ($class, $name = 'default') {
     $args = array_map(function ($item) {
         return '*' . trim($item, '/') . '*';
     }, $args);
-
+    
     return call_user_func_array(['Request', 'is'], $args);
 });
 
@@ -90,10 +90,9 @@ Larakit\Twig::register_function('route_csrf', function () {
         $route          = array_shift($args);
         $args           = \Illuminate\Support\Arr::get($args, 0, []);
         $args['_token'] = csrf_token();
-
+        
         return \URL::route($route, $args);
-    }
-    catch(Exception $e) {
+    } catch(Exception $e) {
         return $e->getMessage();
     }
 });
@@ -114,4 +113,8 @@ Larakit\Twig::register_test('numeric', function ($val) {
 });
 Larakit\Twig::register_test('array', function ($val) {
     return is_array($val);
+});
+
+\Larakit\Twig::register_function('str_is', function ($pattern, $value) {
+    return \Illuminate\Support\Str::is($pattern, $value);
 });
