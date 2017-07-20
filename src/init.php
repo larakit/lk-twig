@@ -24,6 +24,9 @@ Larakit\Twig::register_filter('lower', function ($text) {
 Larakit\Twig::register_filter('int', function ($text) {
     return (int) $text;
 });
+Larakit\Twig::register_filter('nl2br', function ($text) {
+    return nl2br($text);
+});
 
 //######################################################################
 // регистрируем функции
