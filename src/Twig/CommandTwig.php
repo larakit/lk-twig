@@ -1,4 +1,5 @@
 <?php
+
 namespace Larakit\Twig;
 
 use Larakit\Twig;
@@ -50,20 +51,42 @@ class CommandTwig extends \Illuminate\Console\Command {
         $filters = Twig::$filters;
         ksort($filters);
 
-        foreach($filters as $name => $callback) {
+        foreach ($filters as $name => $callback) {
             $r      = new \ReflectionFunction($callback);
             $params = [];
-            if(count($r->getParameters())) {
-                foreach($r->getParameters() as $p) {
+            if (count($r->getParameters())) {
+                foreach ($r->getParameters() as $p) {
                     $params[] = $p->getName();
                 }
             } else {
                 $params[] = '';
             }
             $rows[] = [
-                $this->colored('FILTER','comment'),
-                $this->colored($name,'comment'),
-                $this->colored(implode(',', $params),'comment')
+                $this->colored('FILTER', 'comment'),
+                $this->colored($name, 'comment'),
+                $this->colored(implode(',', $params), 'comment'),
+            ];
+        }
+        $header = [
+            'ТИП',
+            'Название',
+            'Параметры',
+        ];
+        $rows   = [];
+        $filters = \Twig::getFilters();
+        ksort($filters);
+
+        foreach ($filters as $name => $callback) {
+            $node    = $callback->getNodeClass();
+            $comment = '';
+            if (class_exists($node)) {
+                $r = new \ReflectionClass($node);
+                $comment = $r->getDocComment();
+            }
+            $rows[] = [
+                $this->colored('FILTER', 'comment'),
+                $this->colored($name, 'comment'),
+                $this->colored($comment, 'comment'),
             ];
         }
         //################################################################################
@@ -71,41 +94,76 @@ class CommandTwig extends \Illuminate\Console\Command {
         //################################################################################
         $functions = Twig::$functions;
         ksort($functions);
-        foreach($functions as $name => $callback) {
+        foreach ($functions as $name => $callback) {
             $r      = new \ReflectionFunction($callback);
             $params = [];
-            if(count($r->getParameters())) {
-                foreach($r->getParameters() as $p) {
+            if (count($r->getParameters())) {
+                foreach ($r->getParameters() as $p) {
                     $params[] = $p->getName();
                 }
             } else {
                 $params[] = '';
             }
             $rows[] = [
-                $this->colored('FUNCTION','info'),
-                $this->colored($name,'info'),
-                $this->colored(implode(',', $params),'info')
+                $this->colored('FUNCTION', 'info'),
+                $this->colored($name, 'info'),
+                $this->colored(implode(',', $params), 'info'),
+            ];
+        }
+        $functions = \Twig::getFunctions();
+        ksort($functions);
+        foreach ($functions as $name => $callback) {
+            $node    = $callback->getNodeClass();
+            $comment = '';
+            if (class_exists($node)) {
+                $r = new \ReflectionClass($node);
+                $comment = $r->getDocComment();
+            }
+
+            $rows[] = [
+                $this->colored('FUNCTION', 'info'),
+                $this->colored($name, 'info'),
+                $this->colored($comment, 'info'),
             ];
         }
         //################################################################################
         // ТЕСТЫ
         //################################################################################
+
         $tests = Twig::$tests;
         ksort($tests);
-        foreach($tests as $name => $callback) {
+        foreach ($tests as $name => $callback) {
             $r      = new \ReflectionFunction($callback);
             $params = [];
-            if(count($r->getParameters())) {
-                foreach($r->getParameters() as $p) {
+            if (count($r->getParameters())) {
+                foreach ($r->getParameters() as $p) {
                     $params[] = $p->getName();
                 }
             } else {
                 $params[] = '';
             }
             $rows[] = [
-                $this->colored('TEST','comment'),
-                $this->colored($name,'comment'),
-                $this->colored(implode(',', $params),'comment')
+                $this->colored('TEST', 'comment'),
+                $this->colored($name, 'comment'),
+                $this->colored(implode(',', $params), 'comment'),
+            ];
+        }
+
+        $tests = \Twig::getTests();
+        ksort($tests);
+        foreach ($tests as $name => $callback) {
+            /** @var \Twig_SimpleTest */
+            $node    = $callback->getNodeClass();
+            $comment = '';
+            if (class_exists($node)) {
+                $r = new \ReflectionClass($node);
+                //                dd($r->getDocComment());
+                $comment = $r->getDocComment();
+            }
+            $rows[] = [
+                $this->colored('TEST', 'comment'),
+                $this->colored($name, 'comment'),
+                $comment,
             ];
         }
         //################################################################################
@@ -113,11 +171,11 @@ class CommandTwig extends \Illuminate\Console\Command {
         //################################################################################
         $globals = Twig::$globals;
         ksort($globals);
-        foreach($globals as $k => $v) {
+        foreach ($globals as $k => $v) {
             $rows[] = [
-                $this->colored('GLOBAL','info'),
-                $this->colored($k,'info'),
-                $this->colored($v,'info')
+                $this->colored('GLOBAL', 'info'),
+                $this->colored($k, 'info'),
+                $this->colored($v, 'info'),
             ];
 
         }
